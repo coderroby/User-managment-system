@@ -10,7 +10,7 @@ class User extends Dbconfig {
 	private $dbConnect = false;
     public function __construct(){
         if(!$this->dbConnect){ 		
-			$database = new dbConfig();            
+			$database = new dbConfig();
             $this -> hostName = $database -> serverName;
             $this -> userName = $database -> userName;
             $this -> password = $database ->password;
@@ -86,13 +86,13 @@ class User extends Dbconfig {
 			header("Location: index.php");
 		}
 	}		
-	public function adminLogin(){		
+	public function adminLogin(){
 		$errorMessage = '';
 		if(!empty($_POST["login"]) && $_POST["email"]!=''&& $_POST["password"]!='') {	
 			$email = $_POST['email'];
 			$password = $_POST['password'];
-			$sqlQuery = "SELECT * FROM ".$this->userTable." 
-				WHERE email='".$email."' AND password='".md5($password)."' AND status = 'active' AND type = 'administrator'";
+			$sqlQuery = "SELECT * FROM ".$this->userTable."
+				WHERE email='".$email."' AND password='".md5($password)."' AND role = '1'";
 			$resultSet = mysqli_query($this->dbConnect, $sqlQuery);
 			$isValidLogin = mysqli_num_rows($resultSet);	
 			if($isValidLogin){
@@ -258,9 +258,9 @@ class User extends Dbconfig {
 			$sqlQuery .= '(id LIKE "%'.$_POST["search"]["value"].'%" ';
 			$sqlQuery .= ' OR first_name LIKE "%'.$_POST["search"]["value"].'%" ';
 			$sqlQuery .= ' OR last_name LIKE "%'.$_POST["search"]["value"].'%" ';
-			$sqlQuery .= ' OR designation LIKE "%'.$_POST["search"]["value"].'%" ';
-			$sqlQuery .= ' OR status LIKE "%'.$_POST["search"]["value"].'%" ';
-			$sqlQuery .= ' OR mobile LIKE "%'.$_POST["search"]["value"].'%") ';			
+			$sqlQuery .= ' OR email LIKE "%'.$_POST["search"]["value"].'%" ';
+			$sqlQuery .= ' OR Facebook LIKE "%'.$_POST["search"]["value"].'%" ';
+			$sqlQuery .= ' OR phone LIKE "%'.$_POST["search"]["value"].'%") ';
 		}
 		if(!empty($_POST["order"])){
 			$sqlQuery .= 'ORDER BY '.$_POST['order']['0']['column'].' '.$_POST['order']['0']['dir'].' ';
@@ -277,23 +277,25 @@ class User extends Dbconfig {
 		$numRows = mysqli_num_rows($result1);
 		
 		$userData = array();	
-		while( $users = mysqli_fetch_assoc($result) ) {		
+		while( $users = mysqli_fetch_assoc($result) ) {
 			$userRows = array();
 			$status = '';
-			if($users['status'] == 'active')	{
-				$status = '<span class="label label-success">Active</span>';
-			} else if($users['status'] == 'pending') {
-				$status = '<span class="label label-warning">Inactive</span>';
-			} else if($users['status'] == 'deleted') {
-				$status = '<span class="label label-danger">Deleted</span>';
-			}
+			if($users['role'] == '1')	{
+				$status = '<span class="label label-success">Admin</span>';
+			// } if($users['role'] == '0') {
+			} else{
+				$status = '<span class="label label-warning">User</span>';
+			} //else if($users['status'] == 'deleted') {
+			// 	$status = '<span class="label label-danger">Deleted</span>';
+			// }
 			$userRows[] = $users['id'];
 			$userRows[] = ucfirst($users['first_name']." ".$users['last_name']);
-			$userRows[] = $users['gender'];			
-			$userRows[] = $users['email'];	
-			$userRows[] = $users['mobile'];	
-			$userRows[] = $users['type'];
-			$userRows[] = $status;						
+			$userRows[] = $users['Facebook'];
+			$userRows[] = $users['email'];
+			$userRows[] = $users['phone'];
+			$userRows[] = $users['role'];
+			$userRows[] = $users['password'];
+			$userRows[] = $status;
 			$userRows[] = '<button type="button" name="update" id="'.$users["id"].'" class="btn btn-warning btn-xs update">Update</button>';
 			$userRows[] = '<button type="button" name="delete" id="'.$users["id"].'" class="btn btn-danger btn-xs delete" >Delete</button>';
 			$userData[] = $userRows;
@@ -338,7 +340,7 @@ class User extends Dbconfig {
 			$sqlUpdate = "
 				UPDATE ".$this->userTable." 
 				SET password='".md5($_POST['password'])."'
-				WHERE id='".$_SESSION['adminUserid']."' AND type='administrator'";	
+				WHERE id='".$_SESSION['adminUserid']."' AND role='1'";
 			$isUpdated = mysqli_query($this->dbConnect, $sqlUpdate);	
 			if($isUpdated) {
 				$message = "Password saved successfully.";
@@ -361,13 +363,20 @@ class User extends Dbconfig {
 			$userSaved = mysqli_query($this->dbConnect, $insertQuery);
 		}
 	}
-	public function totalUsers ($status) {
+	public function totalUsers ($role) {
 		$query = '';
-		if($status) {
-			$query = " AND status = '".$status."'";
+		if($role) {
+			$query = " AND role = '".$role."'";
 		}
-		$sqlQuery = "SELECT * FROM ".$this->userTable." 
+		$sqlQuery = "SELECT * FROM ".$this->userTable."
 		WHERE id !='".$_SESSION["adminUserid"]."' $query";
+		$result = mysqli_query($this->dbConnect, $sqlQuery);
+		$numRows = mysqli_num_rows($result);
+		return $numRows;
+	}
+	public function totalClients () {
+		$sqlQuery = "SELECT * FROM ".$this->userTable."
+		WHERE id !='".$_SESSION["adminUserid"]."' AND role !='1'";
 		$result = mysqli_query($this->dbConnect, $sqlQuery);
 		$numRows = mysqli_num_rows($result);
 		return $numRows;

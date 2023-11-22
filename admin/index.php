@@ -4,11 +4,11 @@ $user = new User();
 $errorMessage =  $user->adminLogin();
 include('include/header.php');
 ?>
-<title>webdamn.com : Demo User Management System with PHP & MySQL</title>
+<title><?php echo company_name . system_heading; ?></title>
 <?php include('include/container.php');?>
 <div class="container contact">	
-	<h2>Example: User Management System with PHP & MySQL</h2>	
-	<div class="col-md-6">                    
+	<h2><?php echo company_name; ?>User Management System</h2>
+	<div class="col-md-6">
 		<div class="panel panel-info">
 			<div class="panel-heading" style="background:#00796B;color:white;">
 				<div class="panel-title">Admin In</div>                        
@@ -17,7 +17,7 @@ include('include/header.php');
 				<?php if ($errorMessage != '') { ?>
 					<div id="login-alert" class="alert alert-danger col-sm-12"><?php echo $errorMessage; ?></div>                            
 				<?php } ?>
-				<form id="loginform" class="form-horizontal" role="form" method="POST" action="">                                    
+				<form id="loginform" class="form-horizontal" role="form" method="POST" action="">
 					<div style="margin-bottom: 25px" class="input-group">
 						<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 						<input type="text" class="form-control" id="email" name="email" placeholder="email" style="background:white;" required>                                        
@@ -33,8 +33,8 @@ include('include/header.php');
 					</div>	
 					<div style="margin-top:10px" class="form-group">                               
 						<div class="col-sm-12 controls">
-						User: admin@webdamn.com<br>
-						password:123				  
+						User: admin@test.com<br>
+						password:123
 						</div>						
 					</div>	
 				</form>   

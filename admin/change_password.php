@@ -1,4 +1,5 @@
-<?php 
+<?php
+$page_name = "Update Password";
 include('../class/User.php');
 $user = new User();
 $user->adminLoginStatus();
@@ -8,11 +9,11 @@ if(!empty($_POST['password_change']) && $_POST['password_change']) {
 }
 include('include/header.php');
 ?>
-<title>webdamn.com : Demo User Management System with PHP & MySQL</title>
+<title><?php echo company_name . $page_name; ?></title>
 <link rel="stylesheet" href="css/style.css">
 <?php include('include/container.php');?>
-<div class="container contact">	
-	<h2>Example: User Management System with PHP & MySQL</h2>	
+<div class="container contact">
+	<h2><?php echo company_name . system_heading; ?></h2>
 	<?php include 'menus.php'; ?>
 	<div class="col-lg-10 col-md-10 col-sm-9 col-xs-12">   
 		<a href="#"><strong><span class="fa fa-dashboard"></span> Change Password</strong></a>

@@ -1,3 +1,11 @@
+<?php
+define('company_name', ' TechVibes ');
+define('company_url', '#');
+define('company_logo_url', './images/TechVibes.png');
+define('system_heading', 'User Management System');
+// echo company_name;
+?>
+
 <!DOCTYPE html>
 <html>
 <head>

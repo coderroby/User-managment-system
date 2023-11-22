@@ -1,4 +1,4 @@
-<link rel="icon" type="image/png" href="http://webdamn.com/wp-content/themes/v2/webdamn.png">
+<link rel="icon" type="image/png" href="./images/TechVibes.png">
 </head>
 <body class="">
 <div role="navigation" class="navbar navbar-default navbar-static-top">
@@ -10,12 +10,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a href="http://www.webdamn.com" class="navbar-brand">WEBDAMN.COM</a>
+          <a href="<?php echo company_url; ?>" class="navbar-brand"><?php echo company_name; ?></a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="http://www.webdamn.com">Home</a></li>
-           
+            <li class="active"><a href="<?php echo company_url; ?>">Home</a></li>
+
           </ul>
          
         </div><!--/.nav-collapse -->

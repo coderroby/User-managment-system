@@ -1,3 +1,10 @@
+<?php
+// include('../class/User.php');
+// $user = new User();
+// $user->adminLoginStatus();
+// $message  = '';
+// $userDetail = $user->adminDetails();
+?>
 <div id="top-nav" class="navbar navbar-inverse navbar-static-top">
     <div class="container-fluid">
         <div class="navbar-header">

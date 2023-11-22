@@ -1,16 +1,18 @@
-<?php 
+<?php
+$page_name = "Profile page";
 include('../class/User.php');
 $user = new User();
 $user->adminLoginStatus();
 $message  = '';
 $userDetail = $user->adminDetails();
+print_r($userDetail);
 include('include/header.php');
 ?>
-<title>webdamn.com : Demo User Management System with PHP & MySQL</title>
+<title><?php echo company_name . $page_name; ?></title>
 <link rel="stylesheet" href="css/style.css">
 <?php include('include/container.php');?>
 <div class="container contact">	
-	<h2>Example: User Management System with PHP & MySQL</h2>	
+	<h2><?php echo company_name . system_heading; ?></h2>
 	<?php include 'menus.php'; ?>
 	<div class="table-responsive">		
 		<div><span style="font-size:20px;">Admin Details:</span><div class="pull-right"></div>
@@ -28,22 +30,18 @@ include('include/header.php');
 				<td>**********</td>
 			</tr>
 			<tr>
-				<th>Gender</th>
-				<td><?php echo $userDetail['gender']; ?></td>
+				<th>Image</th>
+				<td><?php echo $userDetail['image_name']; ?></td>
 			</tr>
 			<tr>
-				<th>Mobile</th>
-				<td><?php echo $userDetail['mobile']; ?></td>
-			</tr>
-			<tr>
-				<th>Designation</th>
-				<td><?php echo $userDetail['designation']; ?></td>
+				<th>Phone</th>
+				<td><?php echo $userDetail['phone']; ?></td>
 			</tr>
 			<tr>
 				<th>User Type</th>
-				<td><?php echo $userDetail['type']; ?></td>
-			</tr>		
+				<td><?php echo ($userDetail['role'] == 1) ? "Admin" : "user"; ?></td>
+			</tr>
 		</table>
 	</div>
-</div>	
+</div>
 <?php include('include/footer.php');?>
