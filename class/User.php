@@ -6,7 +6,7 @@ class User extends Dbconfig {
     protected $userName;
     protected $password;
 	protected $dbName;
-	private $userTable = 'user';
+	private $userTable = 'users';
 	private $dbConnect = false;
     public function __construct(){
         if(!$this->dbConnect){ 		

@@ -8,7 +8,7 @@ class dbConfig {
         $this -> serverName = 'localhost';
         $this -> userName = 'root';
         $this -> password = '';
-        $this -> dbName = 'user_management';
+        $this -> dbName = 'techvibes';
     }
 }
 ?>
